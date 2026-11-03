@@ -270,9 +270,9 @@ else
 		$SoldierName = htmlspecialchars(strip_tags($CountryRank_r['SoldierName']));
 		$PlayerID = $CountryRank_r['PlayerID'];
 		$Score = $CountryRank_r['Score'];
-		$Playtime = $CountryRank_r['Playtime'];
-		$Playhours = floor($Playtime / 3600);
-		$Playminutes = floor(($Playtime / 60) % 60);
+		$Playtime = (int) $CountryRank_r['Playtime'];
+		$Playhours = intdiv($Playtime, 3600);
+		$Playminutes = intdiv($Playtime, 60) % 60;
 		$Playseconds = $Playtime % 60;
 		$Playtime = $Playhours . ':' . $Playminutes . ':' . $Playseconds;
 		$Kills = $CountryRank_r['Kills'];

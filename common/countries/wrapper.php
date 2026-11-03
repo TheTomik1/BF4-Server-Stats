@@ -16,7 +16,7 @@ if(!empty($ServerID))
 		AND tpd.`CountryCode` != '--'
 		AND tpd.`CountryCode` != ''
 		GROUP BY tpd.`CountryCode`
-		ORDER BY PlayerCount DESC, tps.`Score` DESC, tpd.`CountryCode` ASC
+		ORDER BY PlayerCount DESC, MAX(tps.`Score`) DESC, tpd.`CountryCode` ASC
 		LIMIT 0, 20
 	");
 }
@@ -33,7 +33,7 @@ else
 		AND tpd.`CountryCode` != '--'
 		AND tpd.`CountryCode` != ''
 		GROUP BY tpd.`CountryCode`
-		ORDER BY PlayerCount DESC, tps.`Score` DESC, tpd.`CountryCode` ASC
+		ORDER BY PlayerCount DESC, MAX(tps.`Score`) DESC, tpd.`CountryCode` ASC
 		LIMIT 0, 20
 	");
 }

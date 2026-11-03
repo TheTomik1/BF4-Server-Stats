@@ -101,22 +101,22 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			$x_finish += $x_division;
 			if($loop_count > 0)
 			{
-				imageline($base, $x_start, $last_average, $x_finish, $day_average, $orange);
-				imageline($base, $x_start, $last_max, $x_finish, $day_max, $green);
+				imageline($base, (int) round($x_start), (int) round($last_average), (int) round($x_finish), (int) round($day_average), $orange);
+				imageline($base, (int) round($x_start), (int) round($last_max), (int) round($x_finish), (int) round($day_max), $green);
 			}
 			else
 			{
-				imageline($base, $x_start, $day_average, $x_finish, $day_average, $orange);
-				imageline($base, $x_start, $day_max, $x_finish, $day_max, $green);
+				imageline($base, (int) round($x_start), (int) round($day_average), (int) round($x_finish), (int) round($day_average), $orange);
+				imageline($base, (int) round($x_start), (int) round($day_max), (int) round($x_finish), (int) round($day_max), $green);
 			}
-			imagestring($base, 1, $x_start + 12, $height + 15 + $top_offset, $date, $faded);
-			imageline($base, $x_finish, $height + $top_offset, $x_finish, $height + 10 + $top_offset, $faded);
+			imagestring($base, 1, (int) round($x_start + 12), $height + 15 + $top_offset, $date, $faded);
+			imageline($base, (int) round($x_finish), (int) round($height + $top_offset), (int) round($x_finish), (int) round($height + 10 + $top_offset), $faded);
 			$last_average = $day_average;
 			$last_max = $day_max;
 			$loop_count++;
 		}
 		imagestring($base, 1, 15, $top_offset - 4, $y_max_display, $faded);
-		imagestring($base, 1, 15, $height - ($middle * $y_division) + $top_offset - 4, $middle, $faded);
+		imagestring($base, 1, 15, (int) round($height - ($middle * $y_division) + $top_offset - 4), $middle, $faded);
 		imagestring($base, 1, 15, $height + $top_offset - 4, "0", $faded);
 		imageline($base, 40, $top_offset, 50, $top_offset, $faded);
 		imageline($base, 40, $height + $top_offset, $width + 50, $height + $top_offset, $faded);
@@ -135,7 +135,6 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 	imagealphablending($base, false);
 	imagesavealpha($base, true);
 	imagepng($base);
-	imagedestroy($base);
 }
 // php GD extension doesn't exist. show error image
 else

@@ -29,7 +29,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 		{
 			// query for this player's info
 			$q = @mysqli_query($BF4stats,"
-				SELECT tpd.`SoldierName`, tpd.`GlobalRank`, SUM(tps.`Score`) AS Score, SUM(tps.`Kills`) AS Kills, SUM(tps.`Deaths`) AS Deaths, (SUM(tps.`Kills`)/SUM(tps.`Deaths`)) AS KDR, SUM(tps.`Headshots`) AS Headshots, (SUM(tps.`Headshots`)/SUM(tps.`Kills`)) AS HSR, adk.`ban_status`
+				SELECT tpd.`SoldierName`, tpd.`GlobalRank`, SUM(tps.`Score`) AS Score, SUM(tps.`Kills`) AS Kills, SUM(tps.`Deaths`) AS Deaths, (SUM(tps.`Kills`)/SUM(tps.`Deaths`)) AS KDR, SUM(tps.`Headshots`) AS Headshots, (SUM(tps.`Headshots`)/SUM(tps.`Kills`)) AS HSR, MIN(adk.`ban_status`) AS ban_status
 				FROM `tbl_playerdata` tpd
 				INNER JOIN `tbl_server_player` tsp ON tsp.`PlayerID` = tpd.`PlayerID`
 				INNER JOIN `tbl_playerstats` tps ON tps.`StatsID` = tsp.`StatsID`
@@ -63,7 +63,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			$score = $r['Score'];
 			$kills = $r['Kills'];
 			$deaths = $r['Deaths'];
-			$kdr = round($r['KDR'],2);
+			$kdr = round((float) $r['KDR'],2);
 			$headshots = $r['Headshots'];
 			$hsr = round(($r['HSR']*100),2);
 			// filter out the available ranks
@@ -106,8 +106,8 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 				AND tpd.`GameID` = {$GameID}
 				AND tsp.`ServerID` IN ({$valid_ids})
 				AND (tws.`Damagetype` = 'assaultrifle' OR tws.`Damagetype` = 'lmg' OR tws.`Damagetype` = 'shotgun' OR tws.`Damagetype` = 'smg' OR tws.`Damagetype` = 'sniperrifle' OR tws.`Damagetype` = 'handgun' OR tws.`Damagetype` = 'projectileexplosive' OR tws.`Damagetype` = 'explosive' OR tws.`Damagetype` = 'melee' OR tws.`Damagetype` = 'carbine' OR tws.`Damagetype` = 'dmr' OR tws.`Damagetype` = 'impact' OR tws.`Damagetype` LIKE '%vehicle%' OR tws.`Damagetype` = 'none')
-				GROUP BY tws.`Fullname`
-				ORDER BY Kills DESC, Deaths DESC
+                GROUP BY tws.`WeaponID`
+                ORDER BY Kills DESC, SUM(wa.`Deaths`) DESC
 				LIMIT 1
 			");
 			// are there weapon stats?
@@ -342,7 +342,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 		// start outputting the image
 		header('Pragma: public');
 		header('Cache-Control: max-age=10800');
-		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', $now_timestamp + 10800));
+		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 10800));
 		header("Content-type: image/png");
 		// base image
 		$base = imagecreatefrompng('./images/background.png');
@@ -417,7 +417,6 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 		}
 		// compile image
 		imagepng($base);
-		imagedestroy($base);
 	}
 	else
 	{
@@ -433,7 +432,6 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 		imagestring($base, 4, 120, 40, 'Player ID required.', $light);
 		// compile image
 		imagepng($base);
-		imagedestroy($base);
 	}
 // php GD extension doesn't exist. show error image
 }

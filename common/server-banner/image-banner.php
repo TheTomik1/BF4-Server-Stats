@@ -125,7 +125,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 				AND `Gamemode` != ''
 				AND `MapName` != ''
 				GROUP BY Hourly
-				ORDER BY `TimeMapLoad` DESC
+				ORDER BY MAX(`TimeMapLoad`) DESC
 			");
 			// initialize empty arrays
 			$hour = array();
@@ -195,7 +195,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 					$x_finish += $x_division;
 					if($loop_count > 0)
 					{
-						imageline($base, $x_start, $last_average, $x_finish, $point_average, $orange);
+						imageline($base, (int) $x_start, (int) $last_average, (int) $x_finish, (int) $point_average, $orange);
 					}
 					else
 					{
@@ -204,11 +204,11 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 							// if this is the first point, set it to zero if the current server slots is zero
 							// this is because the server stops updating the map stats when no one is in the server, and it just looks funny when it freezes at the last value
 							$first_point = $height - (0 * $y_division) + $top_offset;
-							imageline($base, $x_start, $first_point, $x_finish, $point_average, $orange);
+							imageline($base, (int) $x_start, (int) $first_point, (int) $x_finish, (int) $point_average, $orange);
 						}
 						else
 						{
-							imageline($base, $x_start, $point_average, $x_finish, $point_average, $orange);
+							imageline($base, (int) $x_start, (int) $point_average, (int) $x_finish, (int) $point_average, $orange);
 						}
 					}
 					$last_average = $point_average;
@@ -225,11 +225,11 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 				}
 				if(strlen((string)$middle) > 1)
 				{
-					imagestring($base, 1, 426, $height - ($middle * $y_division) + $top_offset - 4, $middle, $light);
+					imagestring($base, 1, (int) 426, (int) $height - ($middle * $y_division) + $top_offset - 4, $middle, $light);
 				}
 				else
 				{
-					imagestring($base, 1, 430, $height - ($middle * $y_division) + $top_offset - 4, $middle, $light);
+					imagestring($base, 1, (int) 430, (int) $height - ($middle * $y_division) + $top_offset - 4, $middle, $light);
 				}
 				imagestring($base, 1, 430, $height + $top_offset - 4, "0", $light);
 			}
@@ -257,11 +257,11 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 					$x_finish += $x_division;
 					if($loop_count > 0)
 					{
-						imageline($base, $x_start, $last_average, $x_finish, $point_average, $orange);
+						imageline($base, (int) $x_start, (int) $last_average, (int) $x_finish, (int) $point_average, $orange);
 					}
 					else
 					{
-						imageline($base, $x_start, $point_average, $x_finish, $point_average, $orange);
+						imageline($base, (int) $x_start, (int) $point_average, (int) $x_finish, (int) $point_average, $orange);
 					}
 					$last_average = $point_average;
 					$loop_count++;
@@ -283,7 +283,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			{
 				if(!empty($_GET['w']) && is_numeric($_GET['w'])) 
 				{
-					$width = mysqli_real_escape_string($BF4stats, strip_tags($_GET['w']));
+					$width = (int) round((float) $_GET['w']);
 				}
 				else
 				{
@@ -291,7 +291,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 				}
 				if(!empty($_GET['h']) && is_numeric($_GET['h']))
 				{
-					$height = mysqli_real_escape_string($BF4stats, strip_tags($_GET['h']));
+					$height = (int) round((float) $_GET['h']);
 				}
 				else
 				{
@@ -300,7 +300,6 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 				// compile image and save it in the cache
 				$save = './cache/banner_sid' . $sid . '.png';
 				imagepng($base, $save);
-				imagedestroy($base);
 				// load the cached image back in
 				$banner_img = imagecreatefrompng('./cache/banner_sid' . $sid . '.png');
 				$resize_img = imagecreatetruecolor($width, $height);
@@ -312,13 +311,11 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 				header("Content-type: image/png");
 				// compile image
 				imagepng($resize_img);
-				imagedestroy($resize_img);
 			}
 			else
 			{
 				// compile image
 				imagepng($base);
-				imagedestroy($base);
 			}
 		}
 		// an error occurred while processing query
@@ -344,7 +341,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			{
 				if(!empty($_GET['w']) && is_numeric($_GET['w'])) 
 				{
-					$width = mysqli_real_escape_string($BF4stats, strip_tags($_GET['w']));
+					$width = (int) round((float) $_GET['w']);
 				}
 				else
 				{
@@ -352,7 +349,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 				}
 				if(!empty($_GET['h']) && is_numeric($_GET['h']))
 				{
-					$height = mysqli_real_escape_string($BF4stats, strip_tags($_GET['h']));
+					$height = (int) round((float) $_GET['h']);
 				}
 				else
 				{
@@ -361,7 +358,6 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 				// compile image and save it in the cache
 				$save = './cache/banner_sid' . $sid . '.png';
 				imagepng($base, $save);
-				imagedestroy($base);
 				// load the cached image back in
 				$banner_img = imagecreatefrompng('./cache/banner_sid' . $sid . '.png');
 				$resize_img = imagecreatetruecolor($width, $height);
@@ -373,13 +369,11 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 				header("Content-type: image/png");
 				// compile image
 				imagepng($resize_img);
-				imagedestroy($resize_img);
 			}
 			else
 			{
 				// compile image
 				imagepng($base);
-				imagedestroy($base);
 			}
 		}
 	}
@@ -406,7 +400,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 		{
 			if(!empty($_GET['w']) && is_numeric($_GET['w'])) 
 			{
-				$width = mysqli_real_escape_string($BF4stats, strip_tags($_GET['w']));
+				$width = (int) round((float) $_GET['w']);
 			}
 			else
 			{
@@ -414,7 +408,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			}
 			if(!empty($_GET['h']) && is_numeric($_GET['h']))
 			{
-				$height = mysqli_real_escape_string($BF4stats, strip_tags($_GET['h']));
+				$height = (int) round((float) $_GET['h']);
 			}
 			else
 			{
@@ -423,7 +417,6 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			// compile image and save it in the cache
 			$save = './cache/banner_sid' . $sid . '.png';
 			imagepng($base, $save);
-			imagedestroy($base);
 			// load the cached image back in
 			$banner_img = imagecreatefrompng('./cache/banner_sid' . $sid . '.png');
 			$resize_img = imagecreatetruecolor($width, $height);
@@ -435,13 +428,11 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			header("Content-type: image/png");
 			// compile image
 			imagepng($resize_img);
-			imagedestroy($resize_img);
 		}
 		else
 		{
 			// compile image
 			imagepng($base);
-			imagedestroy($base);
 		}
 	}
 	// there is no server id number in the url query string
@@ -467,7 +458,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 		{
 			if(!empty($_GET['w']) && is_numeric($_GET['w'])) 
 			{
-				$width = mysqli_real_escape_string($BF4stats, strip_tags($_GET['w']));
+				$width = (int) round((float) $_GET['w']);
 			}
 			else
 			{
@@ -475,7 +466,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			}
 			if(!empty($_GET['h']) && is_numeric($_GET['h']))
 			{
-				$height = mysqli_real_escape_string($BF4stats, strip_tags($_GET['h']));
+				$height = (int) round((float) $_GET['h']);
 			}
 			else
 			{
@@ -484,7 +475,6 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			// compile image and save it in the cache
 			$save = './cache/banner_sid' . $sid . '.png';
 			imagepng($base, $save);
-			imagedestroy($base);
 			// load the cached image back in
 			$banner_img = imagecreatefrompng('./cache/banner_sid' . $sid . '.png');
 			$resize_img = imagecreatetruecolor($width, $height);
@@ -496,13 +486,11 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			header("Content-type: image/png");
 			// compile image
 			imagepng($resize_img);
-			imagedestroy($resize_img);
 		}
 		else
 		{
 			// compile image
 			imagepng($base);
-			imagedestroy($base);
 		}
 	}
 // php GD extension doesn't exist. show error image

@@ -1,0 +1,7 @@
+.git
+.github
+.env
+.env.*
+!.env.example
+config/config.php
+test-database/

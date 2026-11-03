@@ -46,10 +46,6 @@ if(!empty($page))
 	{
 		echo 'SERVER INFORMATION';
 	}
-	elseif($page == 'chat')
-	{
-		echo 'CHAT LOG';
-	}
 	elseif($page == 'leaders')
 	{
 		echo 'LEADERBOARD';

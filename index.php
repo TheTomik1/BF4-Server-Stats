@@ -104,11 +104,6 @@ if(!(preg_match('/(?i)msie [1-7]/',$useragent)))
 			// include serverstats.php contents through wrapper
 			require_once('./common/server/wrapper.php');
 		}
-		elseif($page == 'chat')
-		{
-			// include chat.php contents through wrapper
-			require_once('./common/chat/wrapper.php');
-		}
 		elseif($page == 'leaders')
 		{
 			// include leaders.php contents through wrapper

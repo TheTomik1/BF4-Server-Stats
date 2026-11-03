@@ -152,27 +152,6 @@ if(!empty($page))
 			';
 		}
 	}
-	elseif($page == 'chat')
-	{
-		// if there is a ServerID, this is a server stats page
-		if(!empty($ServerID))
-		{
-			echo '
-			<meta name="keywords" content="Chat,Recent,' . $ServerName . ',' . $clan_name . ',BF4" />
-			<meta name="description" content="This is our ' . $clan_name . ' BF4 ' . $ServerName . ' Chat Content page." />
-			<title>' . $clan_name . ' BF4 Stats - Chat Log - ' . $ServerName . '</title>
-			';
-		}
-		// or else this is a combined stats page
-		else
-		{
-			echo '
-			<meta name="keywords" content="Chat,Recent,' . $clan_name . ',BF4" />
-			<meta name="description" content="This is our ' . $clan_name . ' BF4 global Chat Content page." />
-			<title>' . $clan_name . ' BF4 Stats - Chat Log - Global Stats</title>
-			';
-		}
-	}
 	elseif($page == 'home')
 	{
 		// if there is a ServerID, this is a server stats page

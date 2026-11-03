@@ -151,30 +151,6 @@ if(!empty($ServerID) || !empty($page))
 		</div>
 		';
 	}
-	// chat column
-	echo '
-	<div class="menuitems';
-	if($page == 'chat')
-	{
-		echo 'elected';
-	}
-	if(!($isbot) && $adkats_available)
-	{
-		echo '" style="width: 9%">';
-	}
-	else
-	{
-		echo '" style="width: 11%">';
-	}
-	echo '
-	<a class="fill-div" href="' . $_SERVER['PHP_SELF'] . '?p=chat';
-	if(!empty($ServerID))
-	{
-		echo '&amp;sid=' . $ServerID;
-	}
-	echo '">Chat</a>
-	</div>
-	';
 	// countries column
 	echo '
 	<div class="menuitems';

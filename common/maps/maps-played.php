@@ -15,7 +15,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 	if(!empty($sid))
 	{
 		$query = "
-			SELECT `MapName`, SUM(`NumberofRounds`) AS number, sub.`total`
+			SELECT `MapName`, SUM(`NumberofRounds`) AS number, MAX(sub.`total`) AS total
 			FROM `tbl_mapstats`
 			LEFT JOIN
 			(
@@ -39,7 +39,7 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 		// merge server IDs array into a variable
 		$ids = join(',',$ServerIDs);
 		$query = "
-			SELECT `MapName`, SUM(`NumberofRounds`) AS number, sub.`total`
+			SELECT `MapName`, SUM(`NumberofRounds`) AS number, MAX(sub.`total`) AS total
 			FROM `tbl_mapstats`
 			LEFT JOIN
 			(
@@ -132,8 +132,8 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 			{
 				imagestring($base, 1, 434, $legend_y_position, $fraction . "%", $faded);
 			}
-			imagefilledarc($base, 300, 150, 200, 200, $previous_end - 90, $degrees + $previous_end - 90, $wedge_color, IMG_ARC_PIE);
-			imagefilledarc($base, 300, 150, 200, 200, $previous_end - 90, $degrees + $previous_end - 90, $dark, IMG_ARC_EDGED | IMG_ARC_NOFILL);
+			imagefilledarc($base, 300, 150, 200, 200, (int) round($previous_end - 90), (int) round($degrees + $previous_end - 90), $wedge_color, IMG_ARC_PIE);
+			imagefilledarc($base, 300, 150, 200, 200, (int) round($previous_end - 90), (int) round($degrees + $previous_end - 90), $dark, IMG_ARC_EDGED | IMG_ARC_NOFILL);
 			$legend_y_position += 10;
 			$loop_count++;
 			$previous_end += $degrees;
@@ -166,7 +166,6 @@ if(extension_loaded('gd') && function_exists('gd_info'))
 	imagealphablending($base, false);
 	imagesavealpha($base, true);
 	imagepng($base);
-	imagedestroy($base);
 }
 // php GD extension doesn't exist. show error image
 else
