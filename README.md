@@ -1,13 +1,14 @@
 ## BF4 Server Stats Webpage Overview
-###### Download the most recent release and view the most recent release notes: https://github.com/tyger07/BF4-Server-Stats/releases/latest
-###### View the pretty overview page: http://tyger07.github.io/BF4-Server-Stats/
- 
-##
-![Sample](https://raw.githubusercontent.com/tyger07/BF4-Server-Stats/master/.github/overview.png)
+![Sample](https://raw.githubusercontent.com/TheTomik1/BF4-Server-Stats/master/.github/overview.png)
 ###### *(Example Images) Not affiliated with 'Banzore'*
- 
-##
- 
+
+### About this fork
+
+This fork is a modified version of the original BF4 Server Stats Webpage. It has been upgraded to latest PHP (8.5.12) and dockerized to run on Docker. This fork also significantly enhances security of the application.
+
+Huge credit goes to original fork at: [BF4-Server-Stats](https://github.com/tyger07/BF4-Server-Stats) and tyger07 for their work.
+
+
 ### Features
 
 * Easy setup.
@@ -23,7 +24,7 @@
 * Player name search.
 * Top players of the Week.
 * Suspicious players search.
-* Server chat log.
+* ~~Server chat log.~~ (Removed in this fork)
 * Stats signature images.
 * Gametracker-style server banners.
 * Battlelog theme.
@@ -45,79 +46,54 @@ For best compatibility with this web stats page, use the following settings in X
 * "Save Sessiondata to DB?" : Yes
 * "Log playerdata only (no playerstats)?" : No
 
-This webpage code requires that you have access to an Apache web server running a modern version of php and requires that you have read and write permission to add and modify files and directories on that web server.
+This webpage also requires that you have access to an Apache web server with reverse proxy setup and Docker (with Docker Compose) installed on your server.
+
+### Installation and config
+
+#### Installation
+
+1) Clone this repository to your server:
+https://github.com/TheTomik1/BF4-Server-Stats
+
+2) Make sure your Apache has reverse proxy enabled:
+```sudo a2enmod proxy_http sudo systemctl restart apache2```
+
+3) Create a site in sites available directory. Example:
+https://github.com/TheTomik1/BF4-Server-Stats/blob/master/sites-available-example.conf
+
+4) Enable the site. Run the following commands:
+```sudo a2ensite sites-available-example.conf sudo systemctl restart apache2```
+
+5) Follow the configuration instructions below. Do not skip this step!
+
+5) Run the following command to install the dependencies and build the whole app:
+```sudo docker-compose up -d --build```
 
 
-### Help and Support
+#### Configuration
 
-For help with this web stats page code, visit the following forum thread:
-https://myrcon.net/topic/166-bf4-stats-webpage-for-xpkillers-stats-logger-plugin/
-Or, submit a "New Issue" using GitHub:
-https://github.com/tyger07/BF4-Server-Stats/issues/new
+1) Create an .env file from the example:
+```cp .env.example .env```
 
-### Installation Steps
-
-1) Download the following file:
-https://github.com/tyger07/BF4-Server-Stats/zipball/master
-
-2) Extract the files. (maintain the original folder structure)
-
-3) Fill in the required parameters in ./config/config.php.  For help with properly modifying the config.php file, see additional instructions further down in this readme file.
-
-    Note:  You may not include single quotation marks (') in the config.php fields without also using an appropriate php delimiter. For instance, you may not call your clan `'Ty_ger07's Clan'` as it would cause a php compilation error due to the unequal and ambiguously placed single quotation marks.
-
-    Using an appropriate php delimiter, when required, would cause it to work properly.  For example:
-
-    `$clan_name = 'Ty_ger07\'s Clan';`
-
-4) Upload the entire contents to your php-enabled web server and enjoy!
-
-
-### You must fill in the following information in config.php which is in the config folder.
-
-1) Input your stats database host, stats database user name, stats database password, and stats database name.
-
-    For example:
-
-    ```
-    // DATABASE INFORMATION
-    DEFINE('HOST', '100.200.300.400'); // database host address
-    DEFINE('PORT', '3306');            // database port - default is 3306
-    DEFINE('NAME', 'database');        // database name
-    DEFINE('USER', 'user');		// database user name - sometimes the same as the database name
-    DEFINE('PASS', 'pass');		// database password
-    ```
-
-    Note: Some web server providers use the same value for database name and database user name.
-
-
-2) Input your clan name as you would like it to appear in the stats pages.
-
-    For example:
-
-    `$clan_name = 'MyClan';             // your gaming clan or organization name`
-
-
-3) Input your desired banner image URL if you want one other than the default banner image to be displayed.
-
-    `$banner_image = './images/bf4-logo.png'; // your desired page banner`
-
-
-4) Enter the URL which you would like users to redirect to when they click your banner image.
-
-    `$banner_url = 'http://tyger07.github.io/BF4-Server-Stats/'; // where clicking the banner will take you`
+2) Fill in the .env file with database credentials and other settings.
 
 
 ### Additional Information
 
 A .sql file is included in the ./test-database/ folder for users to set up a dummy test database to test this web page when they otherwise have not yet set up a server or have not yet got XpKiller's Stats Logger plugin and database working.
 
+### Help, Support, and Feedback
+
+To get help, support, or feedback, you can submit a "New Issue" using GitHub:
+https://github.com/TheTomik1/BF4-Server-Stats/issues
+
+Optionally, you can also DM me on Discord: thetomik
+
+Will be very happy to help you!
 
 ### Changelog
 
 Refer to commmit history on GitHub:
-https://github.com/tyger07/BF4-Server-Stats/commits/master
-
-
+https://github.com/TheTomik1/BF4-Server-Stats/commits/main/
 
 Enjoy!
