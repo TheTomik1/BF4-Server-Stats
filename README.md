@@ -4,9 +4,9 @@
 
 ### About this fork
 
-This fork is a modified version of the original BF4 Server Stats Webpage. It has been upgraded to latest PHP (8.5.12) and dockerized to run on Docker. This fork also significantly enhances security of the application.
+This fork is a modified version of the original BF4 Server Stats Webpage. It has been upgraded to the latest PHP (8.5.12) and Dockerized. This fork also significantly enhances the security of the application.
 
-Huge credit goes to original fork at: [BF4-Server-Stats](https://github.com/tyger07/BF4-Server-Stats) and tyger07 for their work.
+Huge credit goes to the original fork at: [BF4-Server-Stats](https://github.com/tyger07/BF4-Server-Stats) and tyger07 for their work.
 
 
 ### Features
